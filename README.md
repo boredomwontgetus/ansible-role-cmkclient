@@ -3,7 +3,7 @@ CheckMkClient
 
 A highly configurabe Ansible role to configure a [Check_Mk](https://mathias-kettner.de/check_mk.html) client.
 
-- Installs check-mk-agent on clients; Does use locally provided packages only; See example playbook and comments;
+- Installs check-mk-agent on clients; Does use locally provided packages or a systems repositories; See Role Variables.
 - Puts basic check_mk plugins in place
 - Adds ssh hostkey to the check_mk site user
 - Creates a user and group to run check-mk-agent with
