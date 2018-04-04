@@ -19,25 +19,30 @@ Role Variables
 --------------
 
 - Check_Mk Server host; required: yes
+
   The ansible_inventory name of the check_mk server.
 
       cmkclient_server: 
 
 - Check_Mk Package name and version; required: yes
+
   These are used to check if the desired package is already installed.
    
       cmkclient_pkgname: check-mk-agent
       cmkclient_pkgver: 1.4.0p27-1
 
 - Check_Mk Site user name; required: yes
+
   The username of the user running your Check_Mk site.
 
       cmkclient_site_user: example-site
 
 - Check_Mk package and plugins; (`vars/apt.yml` or `vars/dnf.yml`)
+
   These vars are defined in files dependend on the `ansible_pkg_mgr` var. Below defaults are only showing the defaults for Debian.
 
   - Packages; required: no
+
     Either one of these should be defined to install a package. If `cmkclient_pkgmanager_pkg` is defined the systems configured repositories will be used to install the package. If `cmkclient_package` is defined you have to provide the package in some way (eg. in your 'files' directory and provide the full path). If both are defined the distributions packagemanager has precedence.
 
         cmkclient_pkgmanager_pkg: files/checkmk/check-mk-agent
@@ -49,21 +54,25 @@ Role Variables
            - plugin_src: files/checkmk/mk_apt
              plugin_dst: /usr/lib/check_mk_agent/plugins/86400/mk_apt
 
-- Command to used for checking if the package  is already installed; required: yes
+- Command to used for checking if the package is already installed; required: yes
 
       cmkclient_pkg_test: "dpkg -l | grep -P \'^ii\\s+{{ cmkclient_pkgname }}\\s+{{ cmkclient_pkgver }}\'"
 
 - User configuration if check-mk-agent is not executed as `root`                                                                                                                                         
+
   - Create user or not; required: yes; (True/False)
 
         cmkclient_createuser: False
+
   - Group configuration
 
         cmkclient_group:
           name: checkmk
           gid: 601
-  - User configuration
-    Sudo configuration is only applied if `cmkclient_createuser` is `True` and `cmkclient_user.sudo` is not `False`.
+
+   - User configuration
+
+     Sudo configuration is only applied if `cmkclient_createuser` is `True` and `cmkclient_user.sudo` is not `False`.
 
         cmkclient_user:
           name: checkmk
