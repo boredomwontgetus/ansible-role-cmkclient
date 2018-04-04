@@ -2,7 +2,7 @@
   block:
   - name: Ensure Sudo configuration is in place
     copy:
-      src: "files/sudo/{{ cmkclient_user.sudo }}"
+      src: "{{ cmkclient_user.sudo }}"
       dest: "/etc/sudoers.d/{{ cmkclient_user.sudo }}"
       owner: root
       group: root
