@@ -26,7 +26,7 @@ Role Variables
 
 - Check_Mk Package name and version; required: yes
 
-  These are used to check if the desired package is already installed.
+  These are used to check if the desired package is already installed. This is only used if you the package is not installed by a packagemanagers repository.
    
       cmkclient_pkgname: check-mk-agent
       cmkclient_pkgver: 1.4.0p27-1
