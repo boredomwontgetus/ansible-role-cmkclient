@@ -54,7 +54,7 @@ Role Variables
            - plugin_src: files/checkmk/mk_apt
              plugin_dst: /usr/lib/check_mk_agent/plugins/86400/mk_apt
 
-- Command to used for checking if the package is already installed; required: yes
+- Command used for checking if the package is already installed; required: yes
 
       cmkclient_pkg_test: "dpkg -l | grep -P \'^ii\\s+{{ cmkclient_pkgname }}\\s+{{ cmkclient_pkgver }}\'"
 
