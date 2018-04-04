@@ -1,7 +1,7 @@
 CheckMkClient
 =============
 
-Configures a system's check_mk client.
+A highly configurabe Ansible role to configure a [Check_Mk](https://mathias-kettner.de/check_mk.html) client.
 
 - Installs check-mk-agent on clients; Does use locally provided packages only; See example playbook and comments;
 - Puts basic check_mk plugins in place
@@ -87,56 +87,10 @@ None;
 Example Playbook
 ----------------
 
-- A very basic way of using the role that needs to have your check-mk-agent packages and plugins stored locally.
-
-      - name: Configure Check_MK Client
-        hosts: MonitoredServers
-        roles:
-          - { role: CheckMkClient }
-
-- A more sophisticated aproach that temporarly fetches packages and plugins from the Check_Mk Server.
-
-      - hosts: localhost
-        tasks:
-        - name: Retrieving checks and clients from check_mk system
-          tempfile:
-            state: directory
-            prefix: ansible.cmk.
-          register: localtmpdir
-
-      - hosts: checkmk.example.com
-        vars:
-          all_modules:
-            - /omd/sites/example-site/local/share/check_mk/agents/plugins/mk_apt
-            - /omd/sites/example-site/local/share/check_mk/agents/plugins/yum
-          all_packages:
-            - /omd/sites/example-site/share/check_mk/agents/check-mk-agent-1.4.0p27-1.noarch.rpm
-            - /omd/sites/example-site/share/check_mk/agents/check-mk-agent_1.4.0p27-1_all.deb
-
-        tasks:
-        - name: Fetch packages and plugins from check_mk server
-          fetch:
-            flat: yes
-            fail_on_missing: yes
-            src: "{{ item }}"
-            dest: "{{ hostvars['localhost']['localtmpdir']['path'] }}/"
-          with_items:
-            - "{{ all_modules }}"
-            - "{{ all_packages }}"
-
-      - name: Configure Check_MK Client 
-        hosts: MonitoredServers
-        gather_facts: true
-        roles:
-          - { role: CheckMkClient, localtmpdir: "{{ hostvars['localhost']['localtmpdir'] }}" }
-
-      - hosts: localhost
-        gather_facts: false
-        tasks:
-        - name: Clean tmp data
-          file:
-            path: "{{ localtmpdir.path }}/"
-            state: absent
+    - name: Configure Check_MK Client
+      hosts: MonitoredServers
+      roles:
+        - { role: CheckMkClient }
 
 License
 -------
