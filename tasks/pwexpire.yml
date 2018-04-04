@@ -1,0 +1,13 @@
+---
+- name: Check users password valid time
+  shell: "getent shadow {{ cmkclient_user.name }} | cut -d':' -f5"
+  register: user_pw_valid
+  changed_when: False
+
+- name: Set users password valid time
+  shell: "chage -M {{ cmkclient_user.pwexpire }} {{ cmkclient_user.name }}"
+  when:
+    - not ansible_check_mode
+    - user_pw_valid is defined
+    - user_pw_valid.stdout != cmkclient_user.pwexpire
+

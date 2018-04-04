@@ -1,0 +1,21 @@
+---
+- block:
+    - name: Get hostkey for system
+      command: "ssh-keyscan -T 10 {{ cmkclient_clientname | default(inventory_hostname) }}"
+      changed_when: False
+      register: keyscan
+
+    - name: Add Hostkey to Check-MK User
+      known_hosts:
+        path: '~/.ssh/known_hosts'
+        name: "{{ cmkclient_clientname | default(inventory_hostname) }}"
+        state: present
+        key: "{{ item }}"
+      with_items: "{{ keyscan.stdout_lines }}"
+
+  become: true
+  become_method: su
+  become_user: "{{ cmkclient_site_user }}"
+  delegate_to: "{{ cmkclient_server }}"
+  when:
+    - not ansible_check_mode

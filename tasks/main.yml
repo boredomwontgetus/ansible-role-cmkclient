@@ -1,0 +1,19 @@
+---
+- include_vars: "{{ ansible_pkg_mgr }}.yml"
+
+- include: install_pkg.yml
+  when:
+    - cmkclient_package is defined or cmkclient_pkgmanager_pkg is defined
+
+- include: install_plugins.yml
+
+- include: create_user.yml
+  when: cmkclient_createuser == True
+
+- include: ssh_pubkey.yml
+  when: cmkclient_createuser == True
+
+- include: sudo.yml
+  when: cmkclient_createuser == True
+
+- include: add_host_key.yml

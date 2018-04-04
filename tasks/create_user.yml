@@ -1,0 +1,19 @@
+---
+- name: Ensure monitoring group exists
+  group:
+    name: "{{ cmkclient_group.name }}"
+    gid: "{{ cmkclient_group.gid }}"
+    state: present
+
+- name: Ensure monitoring user exists
+  user:
+    name: "{{ cmkclient_user.name }}"
+    comment: "{{ cmkclient_user.comment }}"
+    uid: "{{ cmkclient_user.uid }}"
+    group: "{{ cmkclient_user.group }}"
+    shell: "{{ cmkclient_user.shell }}"
+    password: "{{ cmkclient_user.password }}"
+    home: "{{ cmkclient_user.home }}"
+    createhome: yes
+
+- include: pwexpire.yml

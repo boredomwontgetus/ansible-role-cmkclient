@@ -1,0 +1,71 @@
+---
+- block:
+    - name: DNF - Ensure check_mk package is installed
+      dnf:
+        name: "{{ cmkclient_pkgmanager_pkg }}"
+        state: present
+      when:
+        - ansible_pkg_mgr == "dnf"
+
+    - name: YUM - Ensure check_mk package is installed
+      dnf:
+        name: "{{ cmkclient_pkgmanager_pkg }}"
+        state: present
+      when:
+        - ansible_pkg_mgr == "yum"
+
+    - name: APT - Ensure check_mk package is installed
+      yum:
+        name: "{{ cmkclient_pkgmanager_pkg }}"
+        state: present
+      when:
+        - ansible_pkg_mgr == "apt"
+  when:
+    - cmkclient_pkgmanager_pkg is defined or (cmkclient_pkg is defined and cmkclient_pkgmanager_pkg is defined)
+
+
+- name: Check if package is installed
+  shell:
+    cmd: "{{ cmkclient_pkg_test }}"
+    warn: no
+  register: pkginstalled
+  changed_when: pkginstalled.rc != 0
+  failed_when: False
+  when:
+    - cmkclient_pkgmanager_pkg is not defined
+
+- block:
+    - name: Create temporary directory
+      tempfile:
+        state: directory
+        suffix: CheckMkClient
+      register: tmpdir
+
+    - name: Copy package to Server
+      copy:
+        #src: "{{ srcdir }}/{{ cmkclient_package | basename}}"
+        src: "{{ cmkclient_package }}"
+        dest: "{{ tmpdir.path }}/"
+        owner: root
+        group: root
+        mode: 0755
+      changed_when: False
+
+    - name: Install check-mk-agent for Debian
+      apt: deb="{{ tmpdir.path }}/{{ cmkclient_package | basename }}"
+      when: ansible_pkg_mgr == "apt"
+
+    - name: Install check-mk-agent for Fedora/EL
+      dnf:
+        name: "{{ tmpdir.path }}/{{ cmkclient_package | basename }}"
+        state: present
+      when: ansible_pkg_mgr == "dnf" or ansible_pkg_mgr == "yum"
+
+    - name: Clean up tmp location
+      file:
+        path: "{{ tmpdir.path }}/"
+        state: absent
+  when:
+    - not ansible_check_mode
+    - pkginstalled.changed
+    - cmkclient_pkgmanager_pkg is not defined
