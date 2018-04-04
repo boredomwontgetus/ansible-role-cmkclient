@@ -16,6 +16,6 @@ cmkclient_user:
   password: '!!'
   home: /home/checkmk
   pwexpire: '99999' # This must be a string!
-  sudo: checkmk
+  sudo: files/authorized_keys/checkmk
   publickey: "{{ lookup('file', 'files/authorized_keys/checkmk') }}"
 
