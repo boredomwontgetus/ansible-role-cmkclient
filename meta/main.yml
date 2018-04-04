@@ -18,7 +18,7 @@ galaxy_info:
         - 6
         - 7
 
-  galaxy_tags: []
+  galaxy_tags:
     - CheckMK
     - monitoring
     - debian
