@@ -8,7 +8,6 @@
     - name: Add Hostkey to Check-MK User
       known_hosts:
         path: '~/.ssh/known_hosts'
-        #name: "{{ cmkclient_clientname | default(inventory_hostname) }}"
         name: "{{ item.split()[0] }}"
         state: present
         key: "{{ item }}"
