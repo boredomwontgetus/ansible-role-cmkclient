@@ -11,11 +11,12 @@ A highly customizable Ansible role to configure a [Check_Mk](https://mathias-ket
 - Creates a user and group to run check-mk-agent with
 - Creates sudo configuration for this monitoring user
 - Puts ssh-public-key in place for the monitoring user
+- Adds a the managed System to Check_Mk
 
 Requirements
 ------------
 
-No special requirements;
+The system this role is run on needs network access to the check_mk server (80/tcp).
 
 Role Variables
 --------------
@@ -87,6 +88,20 @@ Role Variables
            pwexpire: '99999' # This must be a string!
            sudo: checkmk
            publickey: "{{ lookup('file', 'files/authorized_keys/checkmk') }}"
+
+- Host creation configuration
+
+  - Create host or not; required: yes; (True/False)
+
+        cmkclient_createhost: False
+
+  - User for Check_Mk WebAPI
+
+        cmkclient_api_user: automation
+
+  - Secret for Check_Mk's WebAPI User
+
+        cmkclient_api_password: "my-automation-secret"
 
 Dependencies
 ------------

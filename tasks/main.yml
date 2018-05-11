@@ -17,3 +17,6 @@
   when: cmkclient_createuser == True
 
 - include: add_host_key.yml
+
+- include: add_host_to_cmk.yml
+  when: cmkclient_createhost == True

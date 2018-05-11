@@ -4,6 +4,11 @@ cmkclient_pkgname: check-mk-agent
 cmkclient_pkgver: 1.4.0p27-1
 cmkclient_site_user: example
 cmkclient_createuser: False
+
+cmkclient_createhost: False
+cmkclient_api_user: automation
+cmkclient_api_password: "my-automation-secret"
+
 cmkclient_group:
   name: checkmk
   gid: 601
