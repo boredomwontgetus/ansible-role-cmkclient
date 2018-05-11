@@ -1,0 +1,45 @@
+---
+- name: Build connection string
+  set_fact:
+    cmkclient__connection_string: 'http://{{ cmkclient_server }}/{{ cmkclient_site_user }}/check_mk/webapi.py'
+
+- name: Query host on Check_MK site
+  uri:
+    url: '{{ cmkclient__connection_string }}?action=get_host&_username={{ cmkclient_api_user }}&_secret={{ cmkclient_api_password }}&output_format=json'
+    method: 'POST'
+    body: 'request={ "hostname": "{{ cmkclient_clientname | default(inventory_hostname) }}" }'
+    return_content: yes
+  delegate_to: localhost
+  register: cmkclient__host_query
+  changed_when: False
+  failed_when: (not "json" in cmkclient__host_query)
+
+- name: Remove host from Check_MK site
+  uri:
+    url: '{{ cmkclient__connection_string }}?action=delete_host&_username={{ cmkclient_api_user }}&_secret={{ cmkclient_api_password }}&output_format=json'
+    method: 'POST'
+    body: 'request={ "hostname": "{{ cmkclient_clientname | default(inventory_hostname) }}" }'
+    return_content: yes
+  delegate_to: localhost
+  when:
+    - not ansible_check_mode
+    - '"No such host" not in cmkclient__host_query.json.result'
+  register: cmkclient__host_del
+  changed_when: (cmkclient__host_del.json is defined) and
+                (cmkclient__host_del.json.result_code == 0)
+  failed_when: (cmkclient__host_del.json is not defined) or
+               (cmkclient__host_del.json.result_code != 0)
+
+- name: Activate WebAPI changes
+  uri:
+    url: '{{ cmkclient__connection_string }}?action=activate_changes&_username={{ cmkclient_api_user }}&_secret={{ cmkclient_api_password }}&output_format=json'
+    body: 'request={"sites": ["{{ cmkclient_site_user }}"]}'
+    return_content: yes
+    timeout: 120
+  delegate_to: localhost
+  when: (cmkclient__host_del is changed)
+  register: cmkclient__host_activate
+  changed_when: (cmkclient__host_activate.json is defined) and
+                (cmkclient__host_activate.json.result_code == 0)
+  failed_when: (cmkclient__host_activate.json is not defined) or
+               (cmkclient__host_activate.json.result_code != 0)
