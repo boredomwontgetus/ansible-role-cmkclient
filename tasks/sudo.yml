@@ -2,14 +2,14 @@
   block:
   - name: Ensure Sudo configuration is in place
     copy:
-      src: "{{ cmkclient_user.sudo }}"
-      dest: "/etc/sudoers.d/{{ cmkclient_user.sudo | basename }}"
+      src: "{{ cmkclient_user_sudo }}"
+      dest: "/etc/sudoers.d/{{ cmkclient_user_sudo | basename }}"
       owner: root
       group: root
       mode: 0440
 
   - name: Make sure sudo config validates
-    command: "visudo -cf /etc/sudoers.d/{{ cmkclient_user.sudo | basename }}"
+    command: "visudo -cf /etc/sudoers.d/{{ cmkclient_user_sudo | basename }}"
     changed_when: False
   when:
-    - cmkclient_user.sudo != False
+    - cmkclient_user_sudo != False

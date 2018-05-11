@@ -71,25 +71,23 @@ Role Variables
 
   - Group configuration
 
-        cmkclient_group:
-          name: checkmk
-          gid: 601
+        cmkclient_group_name: checkmk
+        cmkclient_group_gid: 601
 
    - User configuration
 
-     Sudo configuration is only applied if `cmkclient_createuser` is `True` and `cmkclient_user.sudo` is not `False`.
+     Sudo configuration is only applied if `cmkclient_createuser` is `True` and `cmkclient_user_sudo` is not `False`.
 
-         cmkclient_user:
-           name: checkmk
-           uid: 601
-           comment: "check_mk monitoring user"
-           group: checkmk
-           shell: /bin/bash
-           password: '!!'
-           home: /home/checkmk
-           pwexpire: '99999' # This must be a string!
-           sudo: checkmk
-           publickey: "{{ lookup('file', 'files/authorized_keys/checkmk') }}"
+         cmkclient_user_name: checkmk
+         cmkclient_user_uid: 601
+         cmkclient_user_comment: "check_mk monitoring user"
+         cmkclient_user_group: checkmk
+         cmkclient_user_shell: /bin/bash
+         cmkclient_user_password: '!!'
+         cmkclient_user_home: /home/checkmk
+         cmkclient_user_pwexpire: '99999' # This must be a string!
+         cmkclient_user_sudo: checkmk
+         cmkclient_user_publickey: "{{ lookup('file', 'files/authorized_keys/checkmk') }}"
 
 - Host creation configuration
 

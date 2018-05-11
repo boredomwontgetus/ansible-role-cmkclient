@@ -1,7 +1,7 @@
 - name: Deploy SSH publickey for monitoring user
   authorized_key:
-    user: "{{ cmkclient_user.name }}"
+    user: "{{ cmkclient_user_name }}"
     manage_dir: yes
     exclusive: yes
     state: present
-    key: "{{ cmkclient_user.publickey }}"
+    key: "{{ cmkclient_user_publickey }}"
