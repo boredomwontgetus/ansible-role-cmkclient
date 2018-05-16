@@ -11,8 +11,8 @@ A highly customizable Ansible role to configure a [Check_Mk](https://mathias-ket
 - Creates a user and group to run check-mk-agent with
 - Creates sudo configuration for this monitoring user
 - Puts ssh-public-key in place for the monitoring user
-- Adds a the managed System to Check_Mk
-- Removes the System from Check_Mk; This is not implemented in `main.yaml`. The playbook responsible for this is named `remove_host_from_cmk.yml` and can be called seperatly with `import_role` in decommision playbooks.
+- Adds a managed System to Check_Mk
+- Removes the System from Check_Mk; This is not implemented in `main.yaml`. The tasks responsible for this are stored in `remove_host_from_cmk.yml` and can be called seperatly with `import_role` in decommision playbooks.
 
 
 Requirements
