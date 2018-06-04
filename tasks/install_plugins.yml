@@ -1,4 +1,16 @@
 ---
+- name: Ensure plugin destination directory exists
+  file:
+    path: "{{ item.plugin_dst | dirname }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  when:
+    - not ansible_check_mode
+    - cmkclient_plugins is defined
+  with_items: "{{ cmkclient_plugins }}"
+
 - name: Copy plugins to server
   copy:
     #src: "{{ srcdir }}/{{ item.plugin_src | basename }}"
