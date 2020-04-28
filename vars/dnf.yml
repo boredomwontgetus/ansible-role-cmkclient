@@ -1,7 +1,7 @@
 ---
 #cmkclient_pkgmanager_pkg: check-mk-agent
-cmkclient_package: /tmp/ansible-cmk-source/check-mk-agent-1.4.0p27-1.noarch.rpm
-cmkclient_plugins: 
-  - plugin_src: /tmp/ansible-cmk-source/yum
-    plugin_dst: /usr/lib/check_mk_agent/plugins/86400/yum
+cmkclient_package: "/tmp/ansible-cmk-source/{{cmkclient_pkgname}}-{{cmkclient_pkgver}}.noarch.rpm"
+#cmkclient_plugins: 
+#  - plugin_src: /tmp/ansible-cmk-source/yum
+#    plugin_dst: /usr/lib/check_mk_agent/plugins/86400/yum
 cmkclient_pkg_test: "rpm -qa | grep {{ cmkclient_pkgname }}-{{ cmkclient_pkgver }}"

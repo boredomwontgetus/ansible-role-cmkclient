@@ -1,7 +1,7 @@
 ---
 #cmkclient_pkgmanager_pkg: check-mk-agent
-cmkclient_package: /tmp/ansible-cmk-source/check-mk-agent_1.4.0p27-1_all.deb
-cmkclient_plugins: 
-  - plugin_src: /tmp/ansible-cmk-source/mk_apt
-    plugin_dst: /usr/lib/check_mk_agent/plugins/86400/mk_apt
-cmkclient_pkg_test: "dpkg -l | grep -P \'^ii\\s+{{ cmkclient_pkgname }}\\s+{{ cmkclient_pkgver }}\'"
+cmkclient_package: "/tmp/ansible-cmk-source/{{cmkclient_pkgname}}_{{cmkclient_pkgver}}_all.deb"
+#cmkclient_plugins: 
+#  - plugin_src: /tmp/ansible-cmk-source/mk_apt
+#    plugin_dst: /usr/lib/check_mk_agent/plugins/86400/mk_apt
+cmkclient_pkg_test: dpkg -l | grep -P '^ii\s+{{ cmkclient_pkgname }}\s+{{ cmkclient_pkgver }}'
