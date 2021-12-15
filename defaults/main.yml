@@ -1,7 +1,7 @@
 ---
 cmkclient_server: checkmk.example.com
 cmkclient_pkgname: check-mk-agent
-cmkclient_pkgver: 1.6.0p11-1
+cmkclient_pkgver: 2.0.0p17-1
 cmkclient_site_user: example
 cmkclient_createuser: False
 
