@@ -23,6 +23,7 @@
   tags: cmkclient-createuser
 
 - include: add_host_key.yml
+  when: cmkclient_addhostkey == True
   tags: cmkclient-addhostkey
 
 - include: add_host_to_cmk.yml

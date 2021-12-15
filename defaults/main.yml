@@ -4,6 +4,7 @@ cmkclient_pkgname: check-mk-agent
 cmkclient_pkgver: 2.0.0p17-1
 cmkclient_site_user: example
 cmkclient_createuser: False
+cmkclient_addhostkey: True
 
 cmkclient_createhost: False
 cmkclient_api_user: automation
