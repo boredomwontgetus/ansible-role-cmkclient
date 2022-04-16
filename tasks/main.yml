@@ -2,30 +2,30 @@
 - include_vars: "{{ ansible_pkg_mgr }}.yml"
   tags: cmkclient-includevars
 
-- include: install_pkg.yml
+- include_tasks: install_pkg.yml
   when:
     - cmkclient_package is defined or cmkclient_pkgmanager_pkg is defined
   tags: cmkclient-installpkg
 
-- include: install_plugins.yml
+- include_tasks: install_plugins.yml
   tags: cmkclient-installplugins
 
-- include: create_user.yml
+- include_tasks: create_user.yml
   when: cmkclient_createuser == True
   tags: cmkclient-createuser
 
-- include: ssh_pubkey.yml
+- include_tasks: ssh_pubkey.yml
   when: cmkclient_createuser == True
   tags: cmkclient-sshpubkey
 
-- include: sudo.yml
+- include_tasks: sudo.yml
   when: cmkclient_createuser == True
   tags: cmkclient-createuser
 
-- include: add_host_key.yml
+- include_tasks: add_host_key.yml
   when: cmkclient_addhostkey == True
   tags: cmkclient-addhostkey
 
-- include: add_host_to_cmk.yml
+- include_tasks: add_host_to_cmk.yml
   when: cmkclient_createhost == True
   tags: cmkclient-addhost
