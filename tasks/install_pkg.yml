@@ -58,6 +58,7 @@
     - name: Install check-mk-agent for Fedora/EL
       dnf:
         name: "{{ tmpdir.path }}/{{ cmkclient_package | basename }}"
+        disable_gpg_check: True
         state: present
       when: ansible_pkg_mgr == "dnf" or ansible_pkg_mgr == "yum"
 
