@@ -1,3 +1,3 @@
 ---
 cmkclient_package: "/tmp/ansible-cmk-source/{{cmkclient_pkgname}}_{{cmkclient_pkgver}}_all.deb"
-cmkclient_pkg_test: dpkg -l | grep -P '^ii\s+{{ cmkclient_pkgname }}\s+{{ cmkclient_pkgver }}'
+cmkclient_pkg_test: dpkg -l | grep '{{ cmkclient_pkgname }}' | grep '{{ cmkclient_pkgver }}'
