@@ -25,9 +25,7 @@
 
 
 - name: Check if package is installed
-  shell:
-    cmd: "{{ cmkclient_pkg_test }}"
-    warn: no
+  shell: "{{ cmkclient_pkg_test }}"
   register: pkginstalled
   changed_when: pkginstalled.rc != 0
   failed_when: False
